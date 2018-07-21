@@ -1,6 +1,7 @@
 package com.basioony.wally.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.basioony.wally.R;
+import com.basioony.wally.activities.WallpapersActivity;
 import com.basioony.wally.models.Category;
 import com.bumptech.glide.Glide;
 
@@ -45,7 +47,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         return categoryList.size();
     }
 
-    class CategoryViewHolder extends RecyclerView.ViewHolder{
+    class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView textView;
         ImageView imageView;
@@ -54,6 +56,17 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
             textView = itemView.findViewById(R.id.text_view_cat_name);
             imageView = itemView.findViewById(R.id.image_view);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int p = getAdapterPosition();
+            Category c = categoryList.get(p);
+
+            Intent intent = new Intent(mCtx, WallpapersActivity.class);
+            intent.putExtra("category",c.name);
+            mCtx.startActivity(intent);
         }
     }
 }
